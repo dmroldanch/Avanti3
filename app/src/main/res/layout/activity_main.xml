@@ -1,0 +1,249 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:background="#EEEEEE"
+    tools:context=".MainActivity"
+    android:screenOrientation="portrait">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@drawable/fondo2"
+        android:padding="0dp"/>
+
+    <RelativeLayout
+        android:paddingTop="230dp"
+        android:id="@+id/contenedorMain"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+    >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CardViewfecha"
+            android:elevation="8dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/fechaLayout"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp"
+        >
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fecha"
+            android:id="@+id/date_text"
+            android:layout_above="@+id/textView2"
+            android:layout_alignParentStart="true"
+            android:textSize="12sp"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spineryfecha"
+            android:layout_alignParentStart="true"
+            android:weightSum="2">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/date"
+        android:textSize="16sp"
+        android:hint="Selecciona Fecha"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="1"
+        />
+
+            <Spinner
+                android:prompt="@string/title_spiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/condiciones_spinner"
+                android:textSize="16sp"
+                android:hint="Selecciona Fecha"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+                android:spinnerMode="dropdown"
+                android:paddingBottom="12dp"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CardViewcliente"
+            android:elevation="8dp"
+            android:layout_alignEnd="@+id/CardViewfecha"
+            android:layout_below="@+id/CardViewfecha">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clientelayout"
+        android:layout_below="@+id/CardView1"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp"
+       >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Cliente"
+            android:id="@+id/Cliente_text"
+            android:layout_above="@+id/textView2"
+            android:layout_alignParentStart="true"
+            android:textSize="12sp"
+            />
+
+             <EditText
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="textPersonName"
+                 android:hint="Selecciona Cliente"
+                 android:ems="10"
+                 android:textSize="16sp"
+                 android:id="@+id/Nombre_cliente"
+                 android:layout_below="@+id/Cliente_text"
+                 android:layout_alignEnd="@+id/editText2" >
+
+             </EditText>
+
+             <ListView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/listaCliente"
+                 android:layout_marginTop="37dp"
+                 android:layout_alignEnd="@+id/Nombre_cliente"
+                 android:layout_alignParentStart="true"
+                 android:visibility="gone">
+             </ListView>
+
+
+         </LinearLayout>
+</android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CardViewvendedor"
+            android:elevation="8dp"
+            android:layout_alignEnd="@+id/CardViewcliente"
+            android:layout_below="@+id/CardViewcliente">
+    <LinearLayout
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/vendedorLayout"
+             android:layout_below="@+id/clientelayout"
+             android:layout_alignParentStart="true"
+             android:weightSum="1"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp">
+
+
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:text="Vendedor"
+                 android:id="@+id/Vendedor_text"
+                 android:layout_below="@+id/clientelayout"
+                 android:layout_alignParentStart="true"
+                 android:paddingTop="12dp"
+                 android:textSize="12sp"
+                 android:fontFamily="assets/fonts/Roboto-Black.ttf">
+             </TextView>
+
+
+             <EditText
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="textPersonName"
+                 android:hint="Selecciona Vendedor"
+                 android:ems="10"
+                 android:textSize="16sp"
+                 android:paddingTop="12dp"
+                 android:paddingBottom="12dp"
+                 android:id="@+id/Nombre_Vendedor"
+                 android:layout_below="@+id/Cliente_text"
+                 android:layout_alignEnd="@+id/editText2">
+             </EditText>
+
+
+
+             <ListView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/listaVendedor"
+                 android:layout_marginTop="37dp"
+                 android:layout_alignEnd="@+id/Nombre_Vendedor"
+                 android:layout_alignParentStart="true"
+                 android:visibility="gone">
+            </ListView>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CardViewlista"
+        android:elevation="8dp"
+        android:layout_alignEnd="@+id/CardViewvendedor"
+        android:layout_below="@+id/CardViewvendedor">
+        >
+
+        <ListView
+        android:id="@+id/listViewMiembros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="1dp"
+>
+    </ListView>
+    </android.support.v7.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/botonProducton"
+        android:background="@drawable/oval"
+        android:elevation="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@mipmap/carrito"
+        />
+    </RelativeLayout>

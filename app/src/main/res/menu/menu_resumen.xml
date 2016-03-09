@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mx.intelisis.maserp.avanti.resumen">
+
+    <item android:id="@+id/Imprimir_res" android:title="@string/Imprimir"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/Enviar_res" android:title="@string/Enviar"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>

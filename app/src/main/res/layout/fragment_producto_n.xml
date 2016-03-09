@@ -1,0 +1,579 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mx.intelisis.maserp.avanti.ProductoN"
+    android:background="#EEEEEE"
+    android:padding="0dp"
+    android:screenOrientation="portrait">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FF9800"
+        android:padding="0dp"
+        android:id="@+id/imageView" />
+
+    <RelativeLayout
+        android:paddingTop="40dp"
+        android:id="@+id/contenedorProducto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        >
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CardViewArt"
+            android:elevation="8dp"
+            >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Artlayout"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="16sp"
+                android:paddingRight="16sp"
+                >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Articulo"
+            android:id="@+id/Art_text"
+            android:textSize="12sp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Selecciona Articulo"
+            android:ems="10"
+            android:textSize="16sp"
+            android:paddingTop="16dp"
+            android:id="@+id/Art_editText"
+            />
+
+       <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/articuloLista"
+
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_below="@+id/Art_editText"
+           android:layout_alignEnd="@+id/Art_editText">
+        </ListView>
+            </LinearLayout>
+</android.support.v7.widget.CardView>
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CardViewOpciones"
+            android:elevation="8dp"
+            android:layout_alignEnd="@+id/CardViewArt"
+            android:layout_below="@+id/CardViewArt"
+            android:visibility="gone"
+            >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Opciones"
+                android:layout_below="@+id/Art_editText"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:padding="16sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Grupo"
+                    android:id="@+id/grupo_title"
+                    android:textSize="12sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/Producto_Importe_n"
+                    android:layout_alignParentLeft="true" />
+
+                <Spinner
+                    android:prompt="@string/title_spiner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/grupo_spinner"
+                    android:textSize="16sp"
+                    android:hint="Selecciona Fecha"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="SubGrupo"
+                    android:id="@+id/subgrupo_title"
+                    android:textSize="12sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/Producto_Importe_n"
+                    android:layout_alignParentLeft="true" />
+
+                <Spinner
+                    android:prompt="@string/title_spiner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/subgrupo_spinner"
+                    android:textSize="16sp"
+                    android:hint="Selecciona Fecha"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Opciones"
+                    android:id="@+id/opcion_title"
+                    android:textSize="12sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/Producto_Importe_n"
+                    android:layout_alignParentLeft="true" />
+
+                <Spinner
+                    android:prompt="@string/title_spiner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/opciones_spinner"
+                    android:textSize="16sp"
+                    android:hint="Selecciona Fecha"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tipo"
+                    android:id="@+id/tipo_title"
+                    android:textSize="12sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/Producto_Importe_n"
+                    android:layout_alignParentLeft="true" />
+
+                <Spinner
+                    android:prompt="@string/title_spiner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/tipo_spinner"
+                    android:textSize="16sp"
+                    android:hint="Selecciona Fecha"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Grado"
+                    android:id="@+id/grado_title"
+                    android:textSize="12sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/Producto_Importe_n"
+                    android:layout_alignParentLeft="true" />
+
+                <Spinner
+                    android:prompt="@string/title_spiner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/grado_spinner"
+                    android:textSize="16sp"
+                    android:hint="Selecciona Fecha"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    />
+
+
+    </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+        <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CardViewArtPrecios"
+        android:elevation="8dp"
+        android:layout_alignEnd="@+id/CardViewOpciones"
+        android:layout_below="@+id/CardViewOpciones"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/preciolayout"
+            android:layout_below="@+id/Art_editText"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:padding="16sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Cantidad de articulos"
+                android:id="@+id/cant_prod_text"
+                android:textSize="12sp"
+                android:layout_below="@+id/Art_editText"
+                android:layout_alignParentStart="true" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/FormularioLayout"
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="1"
+                android:textSize="16sp"
+                android:ems="5"
+                android:id="@+id/cant_prod"
+                android:layout_below="@+id/cant_prod_text"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight=".2"
+                />
+
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/can_boton"
+                android:src="@mipmap/paloma_naranja"
+                android:layout_weight=".8"
+                android:background="#FAFAFA"
+                />
+
+        </LinearLayout>
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Precio"
+            android:id="@+id/precio_text"
+            android:textSize="12sp"
+            android:layout_below="@+id/Art_editText"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="$ 0.0"
+            android:textSize="16sp"
+            android:ems="10"
+            android:focusable="false"
+
+            android:id="@+id/Producto_Precio_n"
+            android:layout_below="@+id/precio_text"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Importe"
+            android:id="@+id/Importe_title"
+            android:textSize="12sp"
+            android:layout_below="@+id/Producto_Precio_n"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="$ 0.0"
+
+            android:textSize="16sp"
+            android:focusable="false"
+            android:ems="10"
+            android:id="@+id/Producto_Importe_n"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Importe_title"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Total"
+            android:id="@+id/Total_title"
+            android:textSize="12sp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Producto_Importe_n"
+            android:layout_alignParentLeft="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="16sp"
+            android:text="$ 0.0"
+            android:editable="false"
+            android:focusable="false"
+            android:ems="10"
+            android:id="@+id/Total"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Total_title"
+            android:layout_alignParentLeft="true" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Observación"
+                android:id="@+id/obser_title"
+                android:textSize="12sp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/Producto_Importe_n"
+                android:layout_alignParentLeft="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textSize="16sp"
+                android:text=" "
+                android:ems="10"
+                android:id="@+id/obser"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/Total_title"
+                android:layout_alignParentLeft="true" />
+
+
+      <!--      <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/oferta"
+                android:textSize="15sp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/obser"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="16dp"/>
+        -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/PoliticaLayout"
+                android:layout_alignEnd="@+id/FormularioLayout"
+                android:layout_below="@+id/fechaLayout"
+                android:weightSum="3"
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/PoliticaLayoutH1"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:weightSum="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PoliticaRegular"
+
+                        android:textSize="16sp"
+                        android:layout_weight=".5"
+                        android:paddingTop="16dp"
+                        android:textColor="#EF6C00"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PrecioRegular"
+
+                        android:textSize="15sp"
+                        android:paddingTop="16dp"
+                        android:layout_weight=".5"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/PoliticaLayoutH3"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:weightSum="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PoliticaMSI"
+                        android:textSize="16sp"
+
+                        android:paddingTop="16dp"
+                        android:layout_weight=".5"
+                        android:textColor="#EF6C00"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PrecioMSI"
+                        android:textSize="15sp"
+
+                        android:paddingTop="16dp"
+                        android:layout_weight=".5"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/PoliticaLayoutH2"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:weightSum="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PoliticaContado"
+                        android:textSize="16sp"
+
+                        android:paddingTop="16dp"
+                        android:layout_weight=".5"
+                        android:textColor="#EF6C00"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/PrecioContado"
+                        android:textSize="15sp"
+
+                        android:paddingTop="16dp"
+                        android:layout_weight=".5"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Disponibilidad"
+                android:id="@+id/disp_title"
+                android:textSize="12sp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/oferta"
+                android:layout_alignParentLeft="true"
+                android:visibility="gone"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp"
+                />
+
+            <ListView
+                android:id="@+id/listDisp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="0dp"
+                android:layout_below="@+id/disp_title">
+            </ListView>
+
+
+        </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+    <ImageButton
+
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/botonagregar"
+        android:background="@drawable/oval"
+        android:elevation="10dp"
+        android:src="@mipmap/icono_mas"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        />
+
+    <ImageButton
+
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/botoncamara"
+        android:background="@drawable/oval"
+        android:elevation="10dp"
+        android:src="@mipmap/camara_icon_b"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:visibility="visible"
+        />
+
+    <QuickContactBadge
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/quickContactBadge"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="436dp"
+        android:layout_marginTop="74dp" />
+
+</RelativeLayout>
