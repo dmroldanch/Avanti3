@@ -34,7 +34,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class cliente_c extends ActionBarActivity {
 
-    CardView cardclienten;
 
     EditText nombreCliente,direccion,colonia,num_ext,num_int,cpostal,poblacion,pais,estado,rfc,telefono;
     String  nombreCliente_s,direccion_s,colonia_s,num_ext_s,num_int_s,cpostal_s,poblacion_s,pais_s,estado_s,rfc_s,telefono_s;
