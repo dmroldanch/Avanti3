@@ -567,13 +567,18 @@
         android:visibility="visible"
         />
 
-    <QuickContactBadge
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/quickContactBadge"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="436dp"
-        android:layout_marginTop="74dp" />
+    <ImageButton
+        android:layout_above="@+id/botoncamara"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/botonScanner"
+        android:background="@drawable/oval"
+        android:elevation="10dp"
+        android:src="@mipmap/ic_scanner"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:visibility="visible"
+        />
+
 
 </RelativeLayout>

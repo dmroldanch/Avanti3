@@ -1,8 +1,10 @@
 package mx.intelisis.maserp.avanti;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +14,7 @@ import android.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,7 +62,7 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
     String ip = "187.163.97.114:8080";
     private EditText articulo_texto,Precio, Importe,Total,cantidad,observacionText;
     ListView listado_A,listsucursales;
-    ImageButton botonagregar,botoncantidad,botonscan;
+    ImageButton botonagregar,botoncantidad,botonscan,botoncam;
     ArrayAdapter<String>  adapterArt,adapterGrupo,adapterSubgrupo,adapterOpciones,adapterTipo,adapterGrado;
     TextView Oferta,disponibleTitle,PoliticaRegular,PrecioRegular,PrecioContado,PoliticaContado,PrecioMSI,PoliticaMSI;
     /*Variables*/
@@ -100,6 +103,7 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         botonCantidad();
       //  editarPrecio();
         camaraCodigo();
+        scanCodigo();
     }
 
 
@@ -150,9 +154,9 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         nuevoregistroA.put("nombrelis", nombredb);
         nuevoregistroA.put("preciolis", preciodb);
         nuevoregistroA.put("preciolis", preciodb);
-        nuevoregistroA.put("idalmacen",idalmacen);
+        nuevoregistroA.put("idalmacen", idalmacen);
         nuevoregistroA.put("almacen", almacen);
-        nuevoregistroA.put("observacion",observacion);
+        nuevoregistroA.put("observacion", observacion);
 
         db.insert("Lista", null, nuevoregistroA);
 
@@ -161,46 +165,45 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
     }
 
 
-    private void inicializarComponentes(){
+    private void inicializarComponentes() {
 
-      //  Oferta = (TextView) findViewById(R.id.oferta);
-        disponibleTitle = (TextView)findViewById(R.id.disp_title);
-        PrecioRegular = (TextView)findViewById(R.id.PrecioRegular);
-        PoliticaRegular = (TextView)findViewById(R.id.PoliticaRegular);
-        PrecioContado = (TextView)findViewById(R.id.PrecioContado);
-        PoliticaContado = (TextView)findViewById(R.id.PoliticaContado);
-        PrecioMSI  = (TextView)findViewById(R.id.PrecioMSI);
-        PoliticaMSI  = (TextView)findViewById(R.id.PoliticaMSI);
+        //  Oferta = (TextView) findViewById(R.id.oferta);
+        disponibleTitle = (TextView) findViewById(R.id.disp_title);
+        PrecioRegular = (TextView) findViewById(R.id.PrecioRegular);
+        PoliticaRegular = (TextView) findViewById(R.id.PoliticaRegular);
+        PrecioContado = (TextView) findViewById(R.id.PrecioContado);
+        PoliticaContado = (TextView) findViewById(R.id.PoliticaContado);
+        PrecioMSI = (TextView) findViewById(R.id.PrecioMSI);
+        PoliticaMSI = (TextView) findViewById(R.id.PoliticaMSI);
 
         precioLayout = (LinearLayout) this.findViewById(R.id.preciolayout);
 
-        Precio = (EditText)findViewById(R.id.Producto_Precio_n);
-        Importe = (EditText)findViewById(R.id.Producto_Importe_n);
-        Total = (EditText)findViewById(R.id.Total);
-        articulo_texto= (EditText) findViewById(R.id.Art_editText);
-        cantidad = (EditText)findViewById(R.id.cant_prod);
-        observacionText = (EditText)findViewById(R.id.obser);
+        Precio = (EditText) findViewById(R.id.Producto_Precio_n);
+        Importe = (EditText) findViewById(R.id.Producto_Importe_n);
+        Total = (EditText) findViewById(R.id.Total);
+        articulo_texto = (EditText) findViewById(R.id.Art_editText);
+        cantidad = (EditText) findViewById(R.id.cant_prod);
+        observacionText = (EditText) findViewById(R.id.obser);
 
         cant_int = Integer.valueOf(cantidad.getText().toString());
 
-        botoncantidad = (ImageButton)findViewById(R.id.can_boton);
+        botoncantidad = (ImageButton) findViewById(R.id.can_boton);
         botonagregar = (ImageButton) findViewById(R.id.botonagregar);
-        botonscan = (ImageButton)findViewById(R.id.botoncamara);
+        botoncam = (ImageButton) findViewById(R.id.botoncamara);
+        botonscan = (ImageButton) findViewById(R.id.botonScanner);
+
 
         listado_A = (ListView) findViewById(R.id.articuloLista);//Listado vendedor
-        listsucursales = (ListView)findViewById(R.id.listDisp);
+        listsucursales = (ListView) findViewById(R.id.listDisp);
 
         cardopciones = (CardView) findViewById(R.id.CardViewOpciones);
-
-        
-        BarcodeEAN codBarras = new BarcodeEAN();
-
-
     }
+
+
 // Se usa camara para detectar codigo
     public void camaraCodigo() {
 
-        botonscan.setOnClickListener(this);
+        botoncam.setOnClickListener(this);
     }
 //Se  abre la aplicacion Scan
     @Override
@@ -212,6 +215,46 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
             scanIntegrator.initiateScan();
         }
     }
+
+    // Se usa scanner fisico para detectar codigo
+    public void scanCodigo() {
+
+        botonscan.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ProductoN.this);
+                builder.setTitle("Usar Scanner Fisico");
+
+// Set up the input
+                final EditText input = new EditText(ProductoN.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ponerNombre(input.getText().toString());
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+            }
+        });
+    }
+
+
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         //Se obtiene el resultado del proceso de scaneo y se parsea
@@ -383,12 +426,14 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
             precioLayout.setVisibility(LinearLayout.GONE);
             botonagregar.setVisibility(LinearLayout.GONE);
             cardopciones.setVisibility(CardView.GONE);
+            botoncam.setVisibility(ImageButton.VISIBLE);
             botonscan.setVisibility(ImageButton.VISIBLE);
     }
 
     public void ocultarlistaA(){
         listado_A.setVisibility(ListView.GONE);
         precioLayout.setVisibility(LinearLayout.VISIBLE);
+        botoncam.setVisibility(ImageButton.GONE);
         botonscan.setVisibility(ImageButton.GONE);
 
      //   botonagregar.setVisibility(LinearLayout.VISIBLE);
