@@ -99,7 +99,7 @@ public class SplashScreen extends Activity {
 
     public void ObjDatosV() {
         AsyncHttpClient client = new AsyncHttpClient();
-        String url_v = "http://"+ip+"/consultaAgente.php";//
+        String url_v = "http://"+ip+"/consultaAgente.php";
         RequestParams parametros = new RequestParams();
 
         client.post(url_v, parametros, new AsyncHttpResponseHandler() {
