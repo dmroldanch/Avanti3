@@ -200,4 +200,8 @@
     <color name="md_falcon_A400_25">#40598bae</color>
 
     <color name="md_statusbar_translucent">#4000</color>
+
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#F57C00</color>
+    <color name="colorAccent">#F57C00</color>
 </resources>

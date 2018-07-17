@@ -298,7 +298,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -578,7 +579,7 @@
         android:id="@+id/botonagregar"
         android:background="@drawable/oval"
         android:elevation="10dp"
-        android:src="@mipmap/icono_mas"
+        android:src="@mipmap/carrito"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"

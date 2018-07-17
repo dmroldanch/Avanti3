@@ -2,31 +2,29 @@ package mx.intelisis.maserp.avanti;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,24 +33,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.itextpdf.text.pdf.BarcodeCodabar;
-import com.itextpdf.text.pdf.BarcodeEAN;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 
 
@@ -68,15 +59,17 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
     /*Variables*/
     Spinner grupo,subGrupo,opciones,tipo,grado;
     String nombredb = null;
-    float preciodb = 0;
+    float preciodb = 0,contado = 0,msi= 0,regular=0;
+
     String iddb = null;
     String almacen = "Stock Bodega Nueva";
-    String condicionPago;
+    String condicionPago = "Contado";
     String observacion = "Sin observación";
     String nombreConsulta;
     String idalmacen = "85";
     String  grupoS="",subGrupoS="",opcionesS="",tipoS="",gradoS="";
-
+    String usuario;
+    int sucursal;
     LinearLayout precioLayout;
 
     DecimalFormat currency = new DecimalFormat("###,###.##");
@@ -87,36 +80,79 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
     float p2;
     float p3;
     int cant_int=1;
+//Bluetooth
 
-    public int SCANNER_REQUEST_CODE = 123;
+    BluetoothManager mBluetoothManager ;
+    BluetoothAdapter mBluetoothAdapter;
+
+
 
     CardView cardopciones;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_producto_n);
 
-        inicializarComponentes();
+        setContentView(R.layout.fragment_producto_n);
         recibirdatos();
+        inicializarComponentes();
+
         leerObjetosA();
         botonAgregar();
         botonCantidad();
       //  editarPrecio();
         camaraCodigo();
         scanCodigo();
+        InputMethodManager inputManager = (InputMethodManager)this.getSystemService(INPUT_METHOD_SERVICE);
+        inputManager.restartInput(observacionText);
     }
 
 
-    public void recibirdatos(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_resumen, menu);
+        return true;
+    }
+
+    //Opciones menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+        if (id == R.id.cotizacion) {
+            Intent intent = new Intent(ProductoN.this, MainActivity.class);
+            intent.putExtra("usuario", usuario);
+            intent.putExtra("sucursal", sucursal);
+            startActivity(intent);
+            finish();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+   public void recibirdatos(){
         Bundle bundle = this.getIntent().getExtras();
-        condicionPago = bundle.getString("condicionPago");
+       usuario = bundle.getString("usuario");
+       sucursal = bundle.getInt("sucursal");
 
     }
 
     public void inicializarprecios (){
+       // articulo_texto.setText(null);
         disponibleTitle.setVisibility(TextView.GONE);
         listsucursales.setAdapter(null);
        // Oferta.setText("")condicionPago;
+        contado = 200;
+        msi = 0;
+        regular =0;
         cantidad.setText("1");
         Precio.setText("$ 0.0");
         Importe.setText("$ 0.0");
@@ -126,6 +162,7 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         PoliticaRegular.setText("");PrecioRegular.setText("");PrecioContado.setText("");PoliticaContado.setText("");PrecioMSI.setText("");PoliticaMSI.setText("");;
         //listsucursales.clear
       //  almacen = null;
+
     }
 
 
@@ -136,10 +173,11 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
 
             @Override
             public void onClick(View v) {
-                ponerObaservacion();
+                ponerObservacion();
                 cargarabd();
-                startActivity(new Intent(ProductoN.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+           //     startActivity(new Intent(ProductoN.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+             //   inicializarprecios();
+                reiniciarActivity(ProductoN.this);
             }
         });
     }
@@ -157,12 +195,16 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         nuevoregistroA.put("idalmacen", idalmacen);
         nuevoregistroA.put("almacen", almacen);
         nuevoregistroA.put("observacion", observacion);
+        nuevoregistroA.put("Regular",regular);
+        nuevoregistroA.put("MSI",msi);
+        nuevoregistroA.put("Contado",contado);
 
         db.insert("Lista", null, nuevoregistroA);
 
         Toast.makeText(getApplicationContext(), "Articulo Agregado" , Toast.LENGTH_LONG).show();
         db.close();
     }
+
 
 
     private void inicializarComponentes() {
@@ -197,7 +239,14 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         listsucursales = (ListView) findViewById(R.id.listDisp);
 
         cardopciones = (CardView) findViewById(R.id.CardViewOpciones);
+
+      //  mBluetoothManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
+      //  mBluetoothAdapter = mBluetoothManager.getAdapter();
+     //   mBluetoothAdapter.cancelDiscovery();
+
     }
+
+
 
 
 // Se usa camara para detectar codigo
@@ -218,6 +267,7 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
 
     // Se usa scanner fisico para detectar codigo
     public void scanCodigo() {
+
 
         botonscan.setOnClickListener(new View.OnClickListener() {
 
@@ -244,6 +294,7 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+
                     }
                 });
 
@@ -274,7 +325,7 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         }
     }
 
-    public void ponerObaservacion(){
+    public void ponerObservacion(){
         observacion = observacionText.getText().toString();
         observacion += " "+grupoS+" "+subGrupoS+" "+opcionesS+" "+tipoS+" "+gradoS;
     }
@@ -538,33 +589,40 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
 
                 preciodb = (float) jsonArray.getJSONObject(i).getDouble("Precio");
 
-                precioLista = (float) jsonArray.getJSONObject(i).getDouble("Precio");
+            //    precioLista = (float) jsonArray.getJSONObject(i).getDouble("Precio");
 
 
 
-                p1 = preciodb;
+              //  p1 = preciodb;
 
-                float f1 = p1;
-                String precioFromato =currency.format(f1);
-                Precio.setText("$ "+precioFromato);
+                //float f1 = p1;
+               // String precioFromato =currency.format(f1);
+               // Precio.setText("$ "+precioFromato);
 
-                String p4 =currency.format(p1 * cant_int);
-                Importe.setText("$ "+ p4);
-                Total.setText("$ "+ p4);
+            //    String p4 =currency.format(p1 * cant_int);
+           //     Importe.setText("$ "+ p4);
+            //    Total.setText("$ "+ p4);
 
-                p2 = precioLista;
-                p3 = p2 - p1;
+             //   p2 = precioLista;
+             //   p3 = p2 - p1;
               //  Descuento = jsonArray.getJSONObject(i).getString("Descuento");
-                if(p3>0) {
+             //   if(p3>0) {
                  //   Oferta.setText(Descuento + "\n\n" + "Precio original: $ " + precioLista + "\n\n" + "Usted ahorra por producto: $ " + p3);
-                }else{
+              //  }else{
                   //  Oferta.setText("");
-                }
-                PrecioRegular.setText( "$ "+currency.format( jsonArray.getJSONObject(i).getDouble("PrecioRegular")));
+            //}
+                //Inserta precio regular
+
+                regular = (float) jsonArray.getJSONObject(i).getDouble("PrecioRegular");
+                PrecioRegular.setText( "$ "+currency.format(regular));
                 PoliticaRegular.setText( jsonArray.getJSONObject(i).getString("PoliticaRegular"));
-                PrecioContado.setText( "$ "+currency.format(jsonArray.getJSONObject(i).getDouble("PrecioContado")));
+                //Inserta precio Contado
+                contado = (float) jsonArray.getJSONObject(i).getDouble("PrecioContado");
+                PrecioContado.setText( "$ "+currency.format(contado));
                 PoliticaContado.setText(jsonArray.getJSONObject(i).getString("PoliticaContado"));
-                PrecioMSI.setText( "$ "+currency.format(jsonArray.getJSONObject(i).getDouble("PrecioMSI")));
+                //Inserta precio MSI
+                msi = (float) jsonArray.getJSONObject(i).getDouble("PrecioMSI");
+                PrecioMSI.setText( "$ "+currency.format(msi));
                 PoliticaMSI.setText(jsonArray.getJSONObject(i).getString("PoliticaMSI"));
             }
 
@@ -632,6 +690,8 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
         }
 
     }
+
+
 
 
     public void llenardis(){
@@ -903,36 +963,56 @@ public class ProductoN extends ActionBarActivity implements NumberPicker.OnValue
 
 
 
-                p1 = preciodb;
+            //    p1 = preciodb;
 
-                float f1 = p1;
-                String precioFromato =currency.format(f1);
-                Precio.setText("$ "+precioFromato);
+            //    float f1 = p1;
+             //   String precioFromato =currency.format(f1);
+             //   Precio.setText("$ "+precioFromato);
 
-                String p4 =currency.format(p1 * cant_int);
-                Importe.setText("$ "+ p4);
-                Total.setText("$ "+ p4);
+              //  String p4 =currency.format(p1 * cant_int);
+              //  Importe.setText("$ "+ p4);
+              //  Total.setText("$ "+ p4);
 
-                p2 = precioLista;
-                p3 = p2 - p1;
+              //  p2 = precioLista;
+              //  p3 = p2 - p1;
                 //  Descuento = jsonArray.getJSONObject(i).getString("Descuento");
-                if(p3>0) {
+              //  if(p3>0) {
                     //   Oferta.setText(Descuento + "\n\n" + "Precio original: $ " + precioLista + "\n\n" + "Usted ahorra por producto: $ " + p3);
-                }else{
+               // }else{
                     //  Oferta.setText("");
-                }
-                PrecioRegular.setText( "$ "+currency.format( jsonArray.getJSONObject(i).getDouble("PrecioRegular")));
+              //  }
+
+                regular = (float) jsonArray.getJSONObject(i).getDouble("PrecioRegular");
+                PrecioRegular.setText( "$ "+currency.format(regular));
                 PoliticaRegular.setText( jsonArray.getJSONObject(i).getString("PoliticaRegular"));
-                PrecioContado.setText( "$ "+currency.format(jsonArray.getJSONObject(i).getDouble("PrecioContado")));
+                //Inserta precio Contado
+                contado = (float) jsonArray.getJSONObject(i).getDouble("PrecioContado");
+                PrecioContado.setText( "$ "+currency.format(contado));
                 PoliticaContado.setText(jsonArray.getJSONObject(i).getString("PoliticaContado"));
-                PrecioMSI.setText( "$ "+currency.format(jsonArray.getJSONObject(i).getDouble("PrecioMSI")));
+                //Inserta precio MSI
+                msi = (float) jsonArray.getJSONObject(i).getDouble("PrecioMSI");
+                PrecioMSI.setText( "$ "+currency.format(msi));
                 PoliticaMSI.setText(jsonArray.getJSONObject(i).getString("PoliticaMSI"));
+
             }
 
         } catch (Exception e) {
 
         }
 
+    }
+
+    public void reiniciarActivity(Activity actividad){
+        Intent intent=new Intent();
+        intent.setClass(actividad, actividad.getClass());
+
+        intent.putExtra("usuario", usuario);
+        intent.putExtra("sucursal", sucursal);
+        //llamamos a la actividad
+        actividad.startActivity(intent);
+        //finalizamos la actividad actual
+
+        actividad.finish();
     }
 
 

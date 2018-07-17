@@ -20,7 +20,8 @@
     <string name="title_spiner">Condicion Pago</string>
     <string name="agregarC">Agregar Cliente</string>
     <string name="PDF">Enviar Email</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="cotizacion_producto">Cotizacion</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="spinnerv">
@@ -62,5 +63,20 @@
     <string name="title_activity_resumen">Resumen</string>
     <string name="title_activity_Nuevo_Producto">Agregar Producto</string>
     <string name="title_activity_cliente_c">Agregar Cliente</string>
+    <string name="carrito">Ir al Carrito</string>
+    <string name="title_activity_inicio_sesion">Inicio de Sesion</string>
 
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_usuario">Usuario</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Iniciar Sesion</string>
+    <string name="action_sign_in_short">Iniciar</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 </resources>

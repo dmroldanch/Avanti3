@@ -13,7 +13,7 @@
         android:background="@drawable/fondo2"
         android:padding="0dp"/>
 
-    <RelativeLayout
+  <RelativeLayout
         android:paddingTop="230dp"
         android:id="@+id/contenedorMain"
         android:layout_width="fill_parent"
@@ -24,83 +24,13 @@
         android:paddingRight="40dp"
     >
 
-        <android.support.v7.widget.CardView
+      <android.support.v7.widget.CardView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/CardViewfecha"
-            android:elevation="8dp">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/fechaLayout"
-        android:paddingLeft="16sp"
-        android:paddingRight="16sp"
-        >
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Fecha"
-            android:id="@+id/date_text"
-            android:layout_above="@+id/textView2"
-            android:layout_alignParentStart="true"
-            android:textSize="12sp"
-            />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spineryfecha"
-            android:layout_alignParentStart="true"
-            android:weightSum="2">
-
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/date"
-        android:textSize="16sp"
-        android:hint="Selecciona Fecha"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_weight="1"
-        />
-
-            <Spinner
-                android:prompt="@string/title_spiner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:id="@+id/condiciones_spinner"
-                android:textSize="16sp"
-                android:hint="Selecciona Fecha"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                android:paddingBottom="12dp"
-                />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-</android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/CardViewcliente"
+            android:id="@+id/cardView_Cliente"
             android:elevation="8dp"
-            android:layout_alignEnd="@+id/CardViewfecha"
-            android:layout_below="@+id/CardViewfecha">
+           android:visibility="gone"
+>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -144,12 +74,157 @@
                  android:layout_marginTop="37dp"
                  android:layout_alignEnd="@+id/Nombre_cliente"
                  android:layout_alignParentStart="true"
-                 android:visibility="gone">
+                 android:visibility="gone"
+                 android:divider="#FFFF">
              </ListView>
 
 
          </LinearLayout>
 </android.support.v7.widget.CardView>
+
+      <android.support.v7.widget.CardView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/cardView_Condicion"
+          android:layout_below="@+id/cardView_Cliente"
+          android:visibility="gone"
+          android:elevation="8dp">
+
+          <LinearLayout
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentStart="true"
+              android:layout_marginTop="10dp"
+              android:id="@+id/fechaLayout"
+              android:paddingLeft="16sp"
+              android:paddingRight="16sp"
+              >
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Condicion de Pago"
+                  android:id="@+id/date_text"
+                  android:layout_above="@+id/textView2"
+                  android:layout_alignParentStart="true"
+                  android:textSize="12sp"
+                  />
+
+              <LinearLayout
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/spineryfecha"
+                  android:layout_alignParentStart="true"
+                  android:weightSum="2">
+
+                  <!--
+                                 <EditText
+                                     android:layout_width="match_parent"
+                                     android:layout_height="wrap_content"
+                                     android:inputType="date"
+                                     android:ems="10"
+                                     android:id="@+id/date"
+                                     android:textSize="16sp"
+                                     android:hint="Selecciona Fecha"
+                                     android:layout_alignParentTop="true"
+                                     android:layout_alignParentStart="true"
+                                     android:layout_weight="1"
+                                     />
+                  -->
+                  <Spinner
+                      android:prompt="@string/title_spiner"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:ems="10"
+                      android:id="@+id/condiciones_spinner"
+                      android:textSize="16sp"
+                      android:hint="Selecciona Fecha"
+                      android:layout_alignParentTop="true"
+                      android:layout_alignParentEnd="true"
+                      android:layout_weight="1"
+                      android:spinnerMode="dropdown"
+                      android:paddingBottom="12dp"
+                      />
+
+
+              </LinearLayout>
+
+          </LinearLayout>
+
+
+      </android.support.v7.widget.CardView>       -->
+
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView_Titulos"
+        android:layout_below="@+id/cardView_Condicion"
+        android:elevation="8dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:id="@+id/Titulos"
+          android:layout_alignParentStart="true"
+          android:paddingLeft="10dp"
+          android:paddingRight="16dp"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          >
+
+          <TextView
+              android:text="QTY"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/cantidad_select"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="start"
+              android:layout_weight="11"
+              android:padding="5dp"/>
+
+          <TextView
+              android:text="Descripcion"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/nombre_select"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="start"
+              android:layout_weight="5"
+              android:padding="5dp"/>
+
+          <TextView
+              android:text="Precio"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/importe_select"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="end"
+              android:layout_weight="10"
+              android:padding="5dp"/>
+
+          <TextView
+              android:text="Total por Partida"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/total_select"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="end"
+              android:layout_weight="10"
+              android:padding="5dp"/>
+
+      </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+      <!--
         <android.support.v7.widget.CardView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -212,38 +287,264 @@
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
-
+-->
     <android.support.v7.widget.CardView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/CardViewlista"
+        android:id="@+id/cardView_lista"
         android:elevation="8dp"
-        android:layout_alignEnd="@+id/CardViewvendedor"
-        android:layout_below="@+id/CardViewvendedor">
+        android:layout_alignEnd="@+id/cardView_Titulos"
+        android:layout_below="@+id/cardView_Titulos">
         >
 
         <ListView
-        android:id="@+id/listViewMiembros"
+        android:id="@+id/listView_Miembros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="1dp"
+            android:visibility="visible"
 >
     </ListView>
+
     </android.support.v7.widget.CardView>
 
+      <android.support.v7.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/cardView_Total"
+          android:layout_below="@+id/cardView_lista"
+          android:elevation="8dp">
+
+      <LinearLayout
+          android:paddingTop="5dp"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:id="@+id/layout_Total"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:layout_alignParentStart="true"
+          android:paddingLeft="10dp"
+          android:paddingRight="16dp"
+          android:paddingTop="5dp"
+          android:paddingBottom="5dp"
+          >
+
+          <TextView
+
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="start"
+              android:layout_weight="11"
+              android:padding="5dp"/>
+
+          <TextView
+
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="start"
+              android:layout_weight="5"
+              android:padding="5dp"/>
+
+          <TextView
+              android:text="Precio Regular"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/Total_BD"
+              android:textSize="15sp"
+              android:textColor="#EF6C00"
+              android:gravity="start"
+              android:layout_weight="9"
+              android:padding="5dp"/>
+
+          <TextView
+              android:text="$ 0000.0"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/total_BD_cant"
+              android:textSize="14sp"
+
+              android:gravity="end"
+              android:layout_weight="9"
+              android:padding="5dp"/>
+
+      </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/layout_MSI"
+              android:layout_below="@id/layout_Total"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:layout_alignParentStart="true"
+              android:paddingLeft="10dp"
+              android:paddingRight="16dp"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              >
+
+              <TextView
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="15sp"
+                  android:textColor="#EF6C00"
+                  android:gravity="start"
+                  android:layout_weight="11"
+                  android:padding="5dp"/>
+
+              <TextView
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="15sp"
+                  android:textColor="#EF6C00"
+                  android:gravity="start"
+                  android:layout_weight="5"
+                  android:padding="5dp"/>
+
+              <TextView
+                  android:text="Precio MSI"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/msi_BD"
+                  android:textSize="15sp"
+                  android:textColor="#EF6C00"
+                  android:gravity="start"
+                  android:layout_weight="9"
+                  android:padding="5dp"/>
+
+              <TextView
+                  android:text="$ 0000.0"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/msi_BD_cant"
+                  android:textSize="14sp"
+                  android:gravity="end"
+                  android:layout_weight="9"
+                  android:padding="5dp"/>
+
+          </LinearLayout>
 
 
-    </RelativeLayout>
+          <LinearLayout
+              android:id="@+id/layout_Contado"
+              android:layout_below="@id/layout_MSI"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:layout_alignParentStart="true"
+              android:paddingLeft="10dp"
+              android:paddingRight="16dp"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              >
+
+              <TextView
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="15sp"
+                  android:textColor="#EF6C00"
+                  android:gravity="start"
+                  android:layout_weight="11"
+                  android:padding="5dp"/>
+
+              <TextView
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="15sp"
+                  android:textColor="#EF6C00"
+                  android:gravity="start"
+                  android:layout_weight="5"
+                  android:padding="5dp"/>
+
+              <TextView
+                  android:text="Precio de Contado"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/contado_BD"
+                  android:textSize="15sp"
+                  android:textColor="#EF6C00"
+                  android:gravity="start"
+                  android:layout_weight="9"
+                  android:padding="5dp"/>
+
+              <TextView
+                  android:text="$ 0000.0"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/contado_BD_cant"
+                  android:textSize="14sp"
+                  android:gravity="end"
+                  android:layout_weight="9"
+                  android:padding="5dp"/>
+
+          </LinearLayout>
+
+      </LinearLayout>
+      </android.support.v7.widget.CardView>
+
+  </RelativeLayout>
 
     <ImageButton
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:id="@+id/botonProducton"
+        android:id="@+id/boton_enviar"
+        android:background="@drawable/oval"
+        android:elevation="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/boton_guardar"
+        android:layout_margin="15.8dp"
+        android:src="@drawable/ic_email"
+        />
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/boton_guardar"
         android:background="@drawable/oval"
         android:elevation="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:src="@mipmap/carrito"
+        android:layout_margin="15.8dp"
+        android:src="@drawable/ic_guarda"
+
         />
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/boton_enviar_2"
+        android:background="@drawable/oval_ok"
+        android:elevation="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/boton_guardar"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_email"
+        android:visibility="invisible"
+        />
+
+    <ImageButton
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/boton_guardar_2"
+        android:background="@drawable/oval_ok"
+        android:elevation="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_guarda"
+        android:visibility="invisible"
+        />
+
+
     </RelativeLayout>

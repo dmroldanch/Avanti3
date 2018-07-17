@@ -1,28 +1,21 @@
 package mx.intelisis.maserp.avanti;
 
-import android.app.ActionBar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
-import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,27 +29,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import android.widget.Toast;
 
-import com.itextpdf.text.Anchor;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Chapter;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.List;
-import com.itextpdf.text.ListItem;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Section;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -65,14 +41,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
+
 
 
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
@@ -80,21 +54,25 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private EditText vendedor_texto, cliente_texto;
 
-    String condicionPago, idagente = null, idcliente = null, fecha;
+    String condicionPago, idagente = "000001", idcliente = null, fecha;
     String clientPDF,condicionPDF;
+    TextView textview_Regular,textView_MSI,textView_Contado;
     ListView listado_V, listado_C, listado_agregados;
     ArrayAdapter<String> adapterlv, adapterlc, adapterspin;
     EditText txtDate;
     LinearLayout clienteLayout, vendedorLayout, fechaLayout;
-    ImageButton entrarproducton, infoboton;
+    ImageButton boton_enviar,boton_guardar,boton_enviar_ok,boton_guardar_ok;
     static final int DIALOG_ID = 0;
     int year_x, day_x, month_x;
     RelativeLayout contendorMain;
     listaCarrito[] datos;
     Spinner condiciones;
-    CardView cardcliente, cardvededor, cardfecha, cardlista;
+    CardView cardcliente, cardvededor, card_Condicion, cardlista,card_Total,card_Titulos;
     String macAddress = null;
     String ip ="187.163.97.114:8080";
+    DecimalFormat currency = new DecimalFormat("###,###.##");
+    String usuario;
+    int sucursal;
 
     ArrayList<String> list = new ArrayList<String>();
 
@@ -107,53 +85,66 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        recibirdatos();
         cargarmac();
         InicializarFecha();
         Calendario();
         inicializarComponentes();
-        botonProductoNuevo();
-        leerObjetosC();
-        leerObjetosV();
-        listaelegidos();
+        botonEnviar();
+        botonGuardar();
         llenarcond();
         cargarpreferencias();
+        //leerObjetosV();
+        leerObjetosC();
+        listaelegidos();
+
+
         BorrarDeLista();
+       // totalesDB();
 
     }
 
-    //Bloquea "ir atras"
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return false;
-    }
+    public void recibirdatos(){
+        Bundle bundle = this.getIntent().getExtras();
+        usuario = bundle.getString("usuario");
+        sucursal = bundle.getInt("sucursal");
+
+      }
 
     //cargar componentes
     private void inicializarComponentes() {
 
         clienteLayout = (LinearLayout) this.findViewById(R.id.clientelayout);
-        vendedorLayout = (LinearLayout) this.findViewById(R.id.vendedorLayout);
+      //  vendedorLayout = (LinearLayout) this.findViewById(R.id.vendedorLayout);
         fechaLayout = (LinearLayout) this.findViewById(R.id.fechaLayout);
 
-        cardcliente = (CardView) findViewById(R.id.CardViewcliente);
-        cardvededor = (CardView) findViewById(R.id.CardViewvendedor);
-        cardfecha = (CardView) findViewById(R.id.CardViewfecha);
-        cardlista = (CardView) findViewById(R.id.CardViewlista);
-
-        vendedor_texto = (EditText) findViewById(R.id.Nombre_Vendedor);
-        listado_V = (ListView) findViewById(R.id.listaVendedor);//Listado vendedor
+        cardcliente = (CardView) findViewById(R.id.cardView_Cliente);
+       // cardvededor = (CardView) findViewById(R.id.CardViewvendedor);
+        card_Condicion = (CardView) findViewById(R.id.cardView_Condicion);
+        cardlista = (CardView) findViewById(R.id.cardView_lista);
+        card_Total = (CardView) findViewById(R.id.cardView_Total);
+        card_Titulos  = (CardView) findViewById(R.id.cardView_Titulos);
+       // vendedor_texto = (EditText) findViewById(R.id.Nombre_Vendedor);
+       // listado_V = (ListView) findViewById(R.id.listaVendedor);//Listado vendedor
 
 
         cliente_texto = (EditText) findViewById(R.id.Nombre_cliente);
         listado_C = (ListView) findViewById(R.id.listaCliente);//Listado cliente
 
-        listado_agregados = (ListView) findViewById(R.id.listViewMiembros);
+        listado_agregados = (ListView) findViewById(R.id.listView_Miembros);
 
+        textView_Contado = (TextView)findViewById(R.id.contado_BD_cant);
+        textView_MSI = (TextView)findViewById(R.id.msi_BD_cant);
+        textview_Regular = (TextView)findViewById(R.id.total_BD_cant);
 
+        boton_enviar_ok = (ImageButton) findViewById(R.id.boton_enviar_2);
+        boton_guardar_ok = (ImageButton) findViewById(R.id.boton_guardar_2);
 
     }
 
     //se llena la lista de condiciones
-    public void llenarcond() {
+   public void llenarcond() {
         SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
         SQLiteDatabase db = BH.getReadableDatabase();
         if (db != null) {
@@ -177,26 +168,50 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             condiciones.setOnItemSelectedListener(this);
         }
     }
-        //se envia condicion de pago
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        TextView myText = (TextView) view;
+        condicionPago = (String) myText.getText();
+        guardarpreferencias("condiciontexto", condicionPago);
+        guardarprefesCond(position);
+        listaelegidos();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public void onClick(View view) {
+
+
+    }
+
+
+    //se envia condicion de pago
     private void EnviarDatos() {
 
         Intent intent = new Intent(MainActivity.this, ProductoN.class);
-        intent.putExtra("condicionPago", condicionPago);
+        intent.putExtra("usuario", usuario);
+        intent.putExtra("sucursal", sucursal);
         startActivity(intent);
     }
 
     public void cargarpreferencias() {
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        vendedor_texto.setText(preferencias.getString("nombre_v", ""));
+//        vendedor_texto.setText(preferencias.getString("nombre_v", ""));
         cliente_texto.setText(preferencias.getString("nombre_c", ""));
         clientPDF = preferencias.getString("nombre_c","");
-        condiciones.setSelection(preferencias.getInt("condicion", 6));
-        idagente = preferencias.getString("id_v", "");
+        condiciones.setSelection(preferencias.getInt("condicion", 7));
+       // idagente = preferencias.getString("id_v", "");
         idcliente = preferencias.getString("id_c", "");
        // macAddress = preferencias.getString("mac", "");
-        condicionPago = preferencias.getString("condiciontexto", "");
-        ocultarlistaV();
-        ocultarlistaC();
+        condicionPago = preferencias.getString("condiciontexto", "Contado");
+    //    ocultarlistaV();
+     //   ocultarlistaC();
     }
 
     //carga Mac
@@ -230,9 +245,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
 
-    public static void reiniciarActivity(Activity actividad) {
+    public  void reiniciarActivity(Activity actividad) {
         Intent intent = new Intent();
         intent.setClass(actividad, actividad.getClass());
+        intent.putExtra("usuario", usuario);
+        intent.putExtra("sucursal", sucursal);
         //llamamos a la actividad
         actividad.startActivity(intent);
         //finalizamos la actividad actual
@@ -240,15 +257,60 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
 
-    private void botonProductoNuevo() {
+    private void botonEnviar() {
 
-        entrarproducton = (ImageButton) findViewById(R.id.botonProducton);
-        entrarproducton.setOnClickListener(new View.OnClickListener() {
+        boton_enviar = (ImageButton) findViewById(R.id.boton_enviar);
+        boton_enviar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                EnviarDatos();
+                boton_enviar.setVisibility(LinearLayout.INVISIBLE);
+                CargaListaC();
+                agregarCliente();
+                botonEnviarOk();
+                ocultarlistaC();
+            }
+        });
+    }
 
+    private void botonGuardar() {
+        boton_guardar = (ImageButton) findViewById(R.id.boton_guardar);
+        boton_guardar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                boton_guardar.setVisibility(LinearLayout.INVISIBLE);
+                CargaListaC();
+                agregarCliente();
+                botonGuardarOk();
+                ocultarlistaC();
+            }
+        });
+    }
+
+    private void botonEnviarOk() {
+
+
+
+        boton_enviar_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                enviarEmail();
+            }
+        });
+    }
+
+    private void botonGuardarOk() {
+
+
+
+        boton_guardar_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                enviarDatosjson();
             }
         });
     }
@@ -276,23 +338,18 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             startActivity(intent);
         }
 
-        if (id == R.id.EnviarCotizacion) {
-
-            enviarDatosjson();
-
-            Toast.makeText(this, "Se envio cotizacion", Toast.LENGTH_LONG);
-
-        }
 
         if (id == R.id.NUevaCotizacion) {
             listaelegidosborrar();
             borrarpreferencias();
             reiniciarActivity(this);
+            finish();
+            Intent intent = new Intent(MainActivity.this, ProductoN.class);
+            intent.putExtra("usuario", usuario);
+            intent.putExtra("sucursal", sucursal);
+            startActivity(intent);
+            finish();
             return true;
-        }
-
-        if (id == R.id.PDF) {
-           enviarEmail();
         }
 
 
@@ -302,32 +359,24 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             System.exit(0);
         }
 
+        if (id == R.id.carrito) {
+            Intent intent = new Intent(MainActivity.this, ProductoN.class);
+            intent.putExtra("usuario", usuario);
+            intent.putExtra("sucursal", sucursal);
+            startActivity(intent);
+            finish();
+        }
+
+
 
         return super.onOptionsItemSelected(item);
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        TextView myText = (TextView) view;
-        condicionPago = (String) myText.getText();
-        guardarpreferencias("condiciontexto", condicionPago);
-        guardarprefesCond(position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void onClick(View view) {
 
 
-    }
 
-
-    public void leerObjetosV() {
+  /*  public void leerObjetosV() {
         SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
         SQLiteDatabase db = BH.getReadableDatabase();
         if (db != null) {
@@ -348,7 +397,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             listado_V.setAdapter(adapterlv);
             CargaListaV();
         }
-    }
+    }*/
 
     public void BorrarDeLista() {
 
@@ -381,7 +430,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     }
 
-
+/*
     public void CargaListaV() {
 
         listado_V.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -414,9 +463,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             public void afterTextChanged(Editable s) {
             }
         });
-    }
+    }*/
 
-
+/*
     public void obtenerIDVendedor(String value) {
         SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
         SQLiteDatabase db = BH.getReadableDatabase();
@@ -429,7 +478,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             guardarpreferencias("id_v", idagente);
         }
     }
-
+*/
     public void obtenerIDCliente(String value) {
         SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
         SQLiteDatabase db = BH.getReadableDatabase();
@@ -443,24 +492,32 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     }
 
-    public void mostrarlistaV() {
+ /*   public void mostrarlistaV() {
         listado_V.setVisibility(ListView.VISIBLE);
         entrarproducton.setVisibility(LinearLayout.GONE);
         cardcliente.setVisibility(CardView.GONE);
         cardfecha.setVisibility(CardView.GONE);
         cardlista.setVisibility(CardView.GONE);
-    }
+    }*/
 
     public void ocultarlistaV() {
 
-        listado_V.setVisibility(ListView.GONE);
-        entrarproducton.setVisibility(LinearLayout.VISIBLE);
-        cardcliente.setVisibility(CardView.VISIBLE);
-        cardfecha.setVisibility(CardView.VISIBLE);
+//        listado_V.setVisibility(ListView.GONE);
+        boton_enviar.setVisibility(LinearLayout.VISIBLE);
+      //  cardcliente.setVisibility(CardView.VISIBLE);
+    //    cardfecha.setVisibility(CardView.VISIBLE);
         cardlista.setVisibility(CardView.VISIBLE);
     }
 
     //carga la lista Cliente
+
+    public void agregarCliente(){
+        cardcliente.setVisibility(CardView.VISIBLE);
+        card_Condicion.setVisibility(CardView.VISIBLE);
+        cardlista.setVisibility(CardView.GONE);
+        card_Titulos.setVisibility(CardView.GONE);
+        card_Total.setVisibility(CardView.GONE);
+    }
 
     public void leerObjetosC() {
         SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
@@ -483,7 +540,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             adapterlc = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arreglo);
             listado_C = (ListView) findViewById(R.id.listaCliente);
             listado_C.setAdapter(adapterlc);
-            CargaListaC();
+
         }
     }
 
@@ -499,6 +556,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 clientPDF = value_c;
                 obtenerIDCliente(value_c);
                 ocultarlistaC();
+                mostrarBotones();
             }
         });
 
@@ -514,7 +572,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
                 adapterlc.getFilter().filter(s);
                 mostrarlistaC();
-
             }
 
             @Override
@@ -525,22 +582,29 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     public void mostrarlistaC() {
         listado_C.setVisibility(ListView.VISIBLE);
-        entrarproducton.setVisibility(LinearLayout.GONE);
-        cardfecha.setVisibility(CardView.GONE);
+        boton_enviar.setVisibility(LinearLayout.GONE);
         cardlista.setVisibility(CardView.GONE);
-        cardvededor.setVisibility(CardView.GONE);
+        card_Condicion.setVisibility(CardView.GONE);
+
+ //       cardvededor.setVisibility(CardView.GONE);
     }
 
     public void ocultarlistaC() {
 
         listado_C.setVisibility(ListView.GONE);
-        entrarproducton.setVisibility(LinearLayout.VISIBLE);
-        cardfecha.setVisibility(CardView.VISIBLE);
+        boton_enviar.setVisibility(LinearLayout.VISIBLE);
         cardlista.setVisibility(CardView.VISIBLE);
-        cardvededor.setVisibility(CardView.VISIBLE);
+        card_Titulos.setVisibility(CardView.VISIBLE);
+        card_Total.setVisibility(CardView.VISIBLE);
+        card_Condicion.setVisibility(CardView.VISIBLE);
+
+//        cardvededor.setVisibility(CardView.VISIBLE);
     }
 
-
+public void mostrarBotones(){
+    boton_enviar_ok.setVisibility(ImageButton.VISIBLE);
+    boton_guardar_ok.setVisibility(ImageButton.VISIBLE);
+}
     //calendario
 
     private void InicializarFecha() {
@@ -572,10 +636,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     };
 
-    public void Calendario() {
-        txtDate = (EditText) findViewById(R.id.date);
+   public void Calendario() {
+      //  txtDate = (EditText) findViewById(R.id.date);
         fecha =  day_x  + "/" +(month_x + 1) + "/" + year_x;
-        txtDate.setText(fecha);
+   /*     txtDate.setText(fecha);
 
         txtDate.addTextChangedListener(new TextWatcher() {
             @Override
@@ -592,7 +656,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });
+        });*/
 
     }
 
@@ -605,11 +669,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             Cursor c = db.rawQuery("select * from Lista", null);
             int cantidad = c.getCount();
             datos = new listaCarrito[cantidad];
+            //Cambia la lista dependiendo de la condicion de pago
+            int condicion = condicionSwitch();
             int i = 0;
             if (c.moveToFirst()) {
                 do {
 
-                    datos[i] = new listaCarrito(c.getString(0), c.getString(1), c.getString(2), c.getInt(3), c.getString(3), c.getInt(4), c.getString(5),c.getString(6),c.getString(7));
+                    datos[i] = new listaCarrito(c.getString(0), c.getString(1), c.getString(2), c.getInt(condicion), c.getString(3), c.getInt(4), c.getString(5),c.getString(6),c.getString(7));
                     i++;
                 } while (c.moveToNext());
 
@@ -631,33 +697,47 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                     titulo.setText(datos[posicion].getTitulo());
 
                     TextView importe = (TextView) item.findViewById(R.id.importe_select);
-                    importe.setText("Impote: $ " + datos[posicion].getPrecio());
+                    importe.setText("$ " + currency.format(datos[posicion].getPrecio()));
 
                     TextView cantidad = (TextView) item.findViewById(R.id.cantidad_select);
-                    cantidad.setText("Cantidad: " + datos[posicion].getCantidad());
+                    cantidad.setText(" " + datos[posicion].getCantidad());
 
                        TextView total = (TextView)item.findViewById(R.id.total_select);
-                       total.setText("Total: $ "+ mostrarTotal(datos[posicion].getPrecio(), datos[posicion].getCantidad()));
+                       total.setText(" $ "+ currency.format(mostrarTotal(datos[posicion].getPrecio(), datos[posicion].getCantidad())));
 
                   //  TextView total = (TextView) item.findViewById(R.id.total_select);
                  //   total.setText("Total: $" + datos[posicion].getPrecio());
 
-                    TextView sucursal = (TextView) item.findViewById(R.id.sucursal_dis);
-                    sucursal.setText("Almacen : " + datos[posicion].getAlmacen());
+             //       TextView sucursal = (TextView) item.findViewById(R.id.sucursal_dis);
+            //        sucursal.setText("Almacen : " + datos[posicion].getAlmacen());
 
-                    infoboton = (ImageButton) item.findViewById(R.id.info_boton);
+                   // infoboton = (ImageButton) item.findViewById(R.id.info_boton);
 
-                    infoboton.setOnClickListener(new View.OnClickListener() {
+                /*   cantidad.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setTitle("Observacion");
+                            builder.setTitle("Cambiar Cantidad");
+                            final EditText input = new EditText(MainActivity.this);
+                            input.setInputType(InputType.TYPE_CLASS_NUMBER);
                             builder.setMessage(datos[posicion].getObservacion());
-                            builder.setNegativeButton("Cerrar", null);
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
+
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                  //  cambiarCantidad(input.getText().toString());
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            builder.show();
                         }
-                    });
+                    });*/
 
 
                     return item;
@@ -666,6 +746,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
             AdapterTitulos adaplist = new AdapterTitulos(this);
             listado_agregados.setAdapter(adaplist);
+            db.close();
+            totalesDB();
+
         }
     }
 
@@ -683,6 +766,32 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         return totalf;
     }
 
+    //Se agregan los totales en la tabla Regular, MSI , Contado
+    public void totalesDB() {
+
+        SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
+        SQLiteDatabase db = BH.getReadableDatabase();
+
+        if (db != null) {
+            Cursor c = db.rawQuery("select SUM(Regular),SUM(MSI),SUM(Contado) from Lista", null);
+
+            String sumatotal ;
+            String regular ;
+            String contado;
+            if (c.moveToFirst()) {
+                do {
+                 textview_Regular.setText("$ "+ currency.format(c.getDouble(0)));
+                 textView_MSI.setText("$ "+ currency.format(c.getDouble(1)));
+                 textView_Contado.setText("$ "+ currency.format(c.getDouble(2)));
+
+                } while (c.moveToNext());
+
+            }
+            db.close();
+
+        }
+
+    }
 
 //Se envian los datos a la BD
     public void enviarDatosjson() {
@@ -694,6 +803,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         String idc = idcliente;
         String idv = idagente;
         String condicionlocal = condicionPago;
+        String usuarioLocal = usuario;
+        int sucursalLocal = sucursal;
         JSONArray productos = new JSONArray();
 
         try {
@@ -702,14 +813,15 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             JSONObject data = new JSONObject();
             data.put("MacAdress",maclocal);
             data.put("Empresa", "RTM");
-            data.put("Sucursal", "0");
+            data.put("Sucursal", sucursalLocal);
             data.put("FechaEmision", fecha);
             data.put("Cliente", idc);
             data.put("Condicion", condicionlocal);
             data.put("Agente", idv);
+            data.put("Usuario",usuarioLocal);
             data.put("productos", productos);
 
-            //Toast.makeText(this, data.toString(), Toast.LENGTH_LONG).show();
+         //   Toast.makeText(this, data.toString(), Toast.LENGTH_LONG).show();
 
             parametros.put("data", data);
 
@@ -725,7 +837,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    System.out.print("No se envio");
+                    System.out.print("No se logro conectar al servidor");
                 }
             });
 
@@ -747,11 +859,17 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             if (mensaje.equals("Proceso Concluido")){
                 listaelegidosborrar();
                 borrarpreferencias();
-                reiniciarActivity(this);
+              //  reiniciarActivity(this);
+
+                Intent intent = new Intent(MainActivity.this, ProductoN.class);
+                intent.putExtra("usuario", usuario);
+                intent.putExtra("sucursal", sucursal);
+                startActivity(intent);
+                finish();
             }
 
         } catch (Exception e) {
-
+            Toast.makeText(this,"No se recibe respuesta: ",Toast.LENGTH_LONG).show();
         }
 
     }
@@ -760,21 +878,24 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
 
-
+// Llena el arreglo para JSON a la Base de Datos
      public void llenararregloJSON(JSONArray jsonArray) {
          SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
          SQLiteDatabase db = BH.getReadableDatabase();
 
          if (db != null) {
                  Cursor c = db.rawQuery("select * from Lista", null);
-            if (c.moveToFirst()) {
 
+
+            if (c.moveToFirst()) {
+                //seleccion el precio de la condicion
+                    int condicion = condicionSwitch();
                 do {
                     try {
                         JSONObject pro = new JSONObject();
                         pro.put("Articulo", c.getString(1));
                         pro.put("Cantidad", c.getString(4));
-                        pro.put("Precio", c.getString(3));
+                        pro.put("Precio", c.getString(condicion));
                         pro.put("Almacen", c.getString(5));
                         pro.put("Renglon", c.getString(0));
                         pro.put("Observaciones", c.getString(7));
@@ -867,16 +988,18 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         SQLHelper BH = new SQLHelper(this, "Avanti", null, 1);
         SQLiteDatabase db = BH.getReadableDatabase();
 
+
+
         if (db != null) {
             Cursor c = db.rawQuery("select * from Lista", null);
             if (c.moveToFirst()) {
-
+                int condicion =condicionSwitch();
                 do {
                     try {
                         JSONObject pro = new JSONObject();
                         pro.put("Articulo", c.getString(2));
                         pro.put("Cantidad", c.getString(4));
-                        pro.put("Precio", c.getString(3));
+                        pro.put("Precio", c.getString(condicion));
 
                         J.put(pro);
 
@@ -890,7 +1013,24 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     }
 
+    public int condicionSwitch(){
+        int condicion = 8;
+        switch(condicionPago){
 
+            case "12 Meses":
+                condicion=9;
+
+                break;
+            case "Contado":
+                condicion=10;
+                break;
+
+            default:
+                condicion=8;
+                break;
+        }
+        return condicion;
+    }
 
 
 

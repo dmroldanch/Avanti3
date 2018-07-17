@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-22.2.1_574f0c4d8d595b348047cae418e9f1eb182ec0b6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/exploded-aar/com.android.support/design/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/com.android.support-design-22.2.1_be7abb3661d9a66f95325063bfa51401a7fd94d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/StudioProjects/Avanti_MASERP/app/libs/itextg-5.5.4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="17cd2879f27ef46dcf9bfc53cb79f1cc4618a763">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/itextg-5.5.4_e09355ceeaf416272e5d3301ad9be6315423a816.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-22.2.1_4cc48590e6416f61d2e35b6091c45b841d8cc495.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.0.0/ee7d9bc1ce7f847f6de8d089c866831effe8d415/core-3.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="ee7d9bc1ce7f847f6de8d089c866831effe8d415">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/core-3.0.0_69690bf8263c358a2b513f72afb0707a720d7ba1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1_73de485cefce7c4f03a4d08873fe48f1f9b58daa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1_04ea1d7c3e4ac5c8ff24670b4250bcbb610997f0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-22.2.1_66890a7b71e964c40e521dba3179416a0d16a3ba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/.gradle/caches/modules-2/files-2.1/cz.msebera.android/httpclient/4.3.6/526a9f794eab830eae4f23a62c572878b3f491ab/httpclient-4.3.6.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/httpclient-4.3.6_0e120fcf3165647309e6062b664a459819ec9aa0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Roldan/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.9/386a4339ffe52d5d63e80f9bed8d2b1d1a418249/android-async-http-1.4.9.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="/Users/Roldan/StudioProjects/Avanti_MASERP/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.9_5ef067c2a9079707982726ef53b35e8983a88902.jar" />
+    </item>
+
+</items>

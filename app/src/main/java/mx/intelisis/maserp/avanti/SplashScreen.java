@@ -4,18 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.preference.DialogPreference;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,13 +17,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.client.cache.Resource;
 
 /**
  * Created by Roldan on 16/10/15.
@@ -48,19 +37,19 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.splash_screen);
         cargarpreferencias();
         macAddress();
-       // hilo = false;
+
+        hilo = false;
        if (hilo == true ) {
 
-            Toast.makeText(getApplicationContext(), "Se cargara la base de datos de los Clientes esto puede demorar unos minutos", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Se cargara la base de datos de los Clientes esto puede demorar unos minutos", Toast.LENGTH_SHORT).show();
             MiTareaAsincrona tareaHilo = new MiTareaAsincrona(this.getApplicationContext());
             tareaHilo.execute();
             hilo = false;
             condicionhilo("hilo",hilo);
         }else {
-          //   terminarActividad();
-           ObjDatosV();
+            terminarActividad();
+         //  ObjDatosV();
         }
-
     }
 
     public void macAddress(){
@@ -73,7 +62,7 @@ public class SplashScreen extends Activity {
             }
             guardarpreferencias("mac", macAddress);
         }
-        Toast.makeText(this,"Su MacAddress es: "+ macAddress,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Su MacAddress es: "+ macAddress,Toast.LENGTH_SHORT).show();
     }
 
     public void guardarpreferencias(String nombre,String s){
@@ -129,12 +118,10 @@ public class SplashScreen extends Activity {
         int cantidad = c1.getCount();
 
 
-        String texto_v;
-
         try {
             JSONArray jsonArray = new JSONArray(response);
-            Toast.makeText(getApplicationContext(), "Cargando Agentes", Toast.LENGTH_LONG).show();
-            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidad + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cargando Agentes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidad + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_SHORT).show();
 
 
             if(cantidad<jsonArray.length()) {
@@ -152,7 +139,7 @@ public class SplashScreen extends Activity {
             e.printStackTrace();
         }
         db.close();
-        Toast.makeText(getApplicationContext(), "Agentes Cargados" , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Agentes Cargados" , Toast.LENGTH_SHORT).show();
         ObjDatosA();
     }
 
@@ -189,8 +176,8 @@ public class SplashScreen extends Activity {
 
         try {
             JSONArray jsonArray2 = new JSONArray(response);
-            Toast.makeText(getApplicationContext(), "Cargando Articulos", Toast.LENGTH_LONG).show();
-            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidad2 + "\n" + "Datos en base remota : " + jsonArray2.length(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cargando Articulos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidad2 + "\n" + "Datos en base remota : " + jsonArray2.length(), Toast.LENGTH_SHORT).show();
 
             if(cantidad2<jsonArray2.length()) {
                 for (int i = 0; i < jsonArray2.length(); i++) {
@@ -206,7 +193,7 @@ public class SplashScreen extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "Articulos Cargados" , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Articulos Cargados" , Toast.LENGTH_SHORT).show();
         db.close();
         ObjDatosCon();
     }
@@ -246,8 +233,8 @@ public class SplashScreen extends Activity {
 
         try {
             JSONArray jsonArray = new JSONArray(response);
-            Toast.makeText(getApplicationContext(), "Cargando Condiciones", Toast.LENGTH_LONG).show();
-            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidadcon + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cargando Condiciones", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidadcon + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_SHORT).show();
 
 
             if(cantidadcon<jsonArray.length()) {
@@ -262,7 +249,7 @@ public class SplashScreen extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "Condiciones Cargadas" , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Condiciones Cargadas" , Toast.LENGTH_SHORT).show();
         db.close();
        ObjDatosOpc();
     }
@@ -302,8 +289,8 @@ public class SplashScreen extends Activity {
 
         try {
             JSONArray jsonArray = new JSONArray(response);
-            Toast.makeText(getApplicationContext(), "Cargando Opciones", Toast.LENGTH_LONG).show();
-            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidadopc + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cargando Opciones", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidadopc + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_SHORT).show();
 
 
             if(cantidadopc<jsonArray.length()) {
@@ -324,14 +311,70 @@ public class SplashScreen extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "Opciones Cargadas" , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Opciones Cargadas" , Toast.LENGTH_SHORT).show();
+        db.close();
+        ObjDatosSucursal();
+    }
+
+
+    public void ObjDatosSucursal() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url_con = "http://"+ip+"/sucursales.php";
+        RequestParams parametros = new RequestParams();
+
+        client.post(url_con, parametros, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (statusCode == 200) {
+                    //  llamar funcion ..
+                    Sucursales(new String(responseBody));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+    }
+
+    public void Sucursales(String response) {
+
+        SQLHelper baseHelper = new SQLHelper(this, "Avanti", null, 1);
+        SQLiteDatabase db = baseHelper.getWritableDatabase();
+
+        Cursor c1 = db.rawQuery("select * from Sucursal", null);
+        int cantidadopc = c1.getCount();
+
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            Toast.makeText(getApplicationContext(), "Cargando Sucursales", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Datos en base local : " + cantidadopc + "\n" + "Datos en base remota : " + jsonArray.length(), Toast.LENGTH_SHORT).show();
+
+
+            if(cantidadopc<jsonArray.length()) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+
+                    ContentValues nuevoregistroSuc = new ContentValues();
+                    nuevoregistroSuc.put("Sucursal",jsonArray.getJSONObject(i).getInt("Sucursal") );
+                    nuevoregistroSuc.put("Nombre",jsonArray.getJSONObject(i).getString("Nombre") );
+                    db.insert("Sucursal", null, nuevoregistroSuc);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(getApplicationContext(), "Sucursales Cargadas" , Toast.LENGTH_SHORT).show();
         db.close();
         terminarActividad();
     }
 
-
     public void terminarActividad(){
-        Intent nuevaActivity = new Intent(SplashScreen.this,MainActivity.class);
+        Intent nuevaActivity = new Intent(SplashScreen.this,InicioSesion.class);
         startActivity(nuevaActivity);
         finish();
 
